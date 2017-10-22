@@ -14,7 +14,7 @@ Hello! You might be wondering why the phrase "functional composition" is so impo
 
 * how does my component receive and acquire it's data it will use to render
 * how do I have a stateless and easily testable functional UI components
-* how do I easily define when this component should not update the DOM
+* how do I easily define when a UI component should not update it's DOM
 
 This library attempts to serve all these, in addition to exposing a very efficient way of updating the DOM. We'll explore these ideas below in a series of small component examples.
 
