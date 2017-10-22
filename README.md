@@ -70,6 +70,8 @@ customElements.define("hello-world", HelloWorldly);
 <hello-worldly greeting="Bonjour" name="Monde"></hello-worldly>
 ```
 
+[Demo](https://jsfiddle.net/j5jmqef6/)
+
 HTML elements receive data through two primary way: attributes & properties. Properties are primarily a far more efficient way to receive data, as they do not require string conversion and should be the emphasis of the components you create, however sometimes it is useful to expose attributes on your HTML that just make it easier to use!
 
 Custom Elements V1, requires us to describe which attributes our HTML element will observe the changes of: greeting & name. WebCompose requires us to define a definition of the properties used by your component, and how you would like them exposed. In our example above, we express that we not only want properties greeeting & name, but also to expose them as an attribute with a similar name and a default value. Now we can update our component in two ways.
