@@ -97,8 +97,8 @@ class FruitList extends ComposableElement {
   }
 
   static render({fruit}){
-  	const fruitList = repeat(
-    	fruit,
+    const fruitList = repeat(
+      fruit,
       (i) => i,
       (i, index) => html`<div>${index+1}. ${i}</div>`
     );
@@ -117,7 +117,7 @@ customElements.define("fruit-list", FruitList);
 ```
 [Demo](https://jsfiddle.net/n1rn0m3f/)
 
-Lists can be generated/reordered efficiently using a helper function repeat.
+Lists can be generated/reordered efficiently using a helper function repeat. WebCompose's rendering engine uses a unique key on each object in order to efficiently update the DOM when changes occur to the list (reorderings, additions, deletions).
 
 
 ### `repeat(arrayOfItems, mapItemToKey, mapItemToHTML)`
