@@ -37,6 +37,7 @@ customElements.define("hello-world", HelloWorld);
 ```html
 <hello-world></hello-world>
 ```
+[Demo](https://jsfiddle.net/n8akh1e9/)
 
 Before beginning anything, let's get our feet wet and remind ourselves what web components are. Simply put: they let us create new and powerful HTML tags! This library uses Custom Elements V1, Shadow DOM V1, and Templates to do this. These technologies can be polyfilled, but many modern libraries are supporting them out of the box too. Custom Elements use ES6 classes to define element behavior. Our components will extend this library's element ComposableElement that does all the heavy lifting.
 
