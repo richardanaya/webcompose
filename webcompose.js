@@ -38,19 +38,21 @@ class ComposableElement extends HTMLElement {
     this.$attrDefs = {};
     this.$props = {};
     this.$shadow = this.attachShadow({mode:'open'});
-    var keys = Object.keys(this.$propDefs);
-    for(var i = 0 ; i < keys.length; i++){
-      const key = keys[i];
-      const def = this.$propDefs[key];
-      this.$props[key] = def.value;
-      if(def.attr){
-        this.$attrDefs[def.attr] = {propDef:def,key};
-        var attrValue = this.getAttribute(def.attr);
-        if(attrValue !== null){
-            this.$props[key] = this.getAttrValue(attrValue,def.type);
+    if(this.$propDefs){
+      var keys = Object.keys(this.$propDefs);
+      for(var i = 0 ; i < keys.length; i++){
+        const key = keys[i];
+        const def = this.$propDefs[key];
+        this.$props[key] = def.value;
+        if(def.attr){
+          this.$attrDefs[def.attr] = {propDef:def,key};
+          var attrValue = this.getAttribute(def.attr);
+          if(attrValue !== null){
+              this.$props[key] = this.getAttrValue(attrValue,def.type);
+          }
         }
+        this.defineProp(key);
       }
-      this.defineProp(key);
     }
     if(!this.__proto__.constructor.observedAttributes){
       this.__proto__.constructor.observedAttributes = Object.keys(this.$attrDefs);
@@ -171,5 +173,6 @@ export {
   withProps,
   withHandlers,
   pure,
-  withState
+  withState,
+  render
 }
