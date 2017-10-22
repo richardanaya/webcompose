@@ -251,7 +251,7 @@ class Counter extends ComposableElement {
   static get composition(){
     return [
       connect((state)=>({
-      	counter: state
+       counter: state
       }), (dispatch}) => ({
       	increment : () => {
         	dispatch({type:"INCREMENT"});
