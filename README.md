@@ -73,7 +73,7 @@ element.greeting="Guten Tag";
 // or via attribute
 element.setAttribute("name","Welt");
 ```
-*Pro Tip: if you select an element using inspect or element view in Chrome def tools, you can access the selected element using the $0 variable*
+*Pro Tip: if you select an element using inspect or element view in Chrome Dev Tools, you can access the selected element using the $0 variable in the console*
 
 You'll notice now that our rendering logic now has two props available to it. WebCompose is about definint a flow of data within your compoment, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
