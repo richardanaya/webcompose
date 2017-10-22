@@ -4,9 +4,6 @@ Create web components with functional composition
 ```bash 
 npm install webcompose
 ```
-
-or
-
 ```html 
 <script src="https://unpkg.com/webcompose@latest/dist/webcompose.min.js"></script>
 ```
