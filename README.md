@@ -25,11 +25,10 @@ customElements.define("hello-world", HelloWorld);
 # Simple Counter
 
 ```javascript
-import { ComposableElement, html, pure, withState, withHandlers } from "webcompose"
+import { ComposableElement, html, withState, withHandlers } from "webcompose"
   static get composition(){
     return [
-      withState("counter","setCounter",1),
-      pure(),
+      withState("counter","setCounter",1)
       withHandlers({
         increment : ({counter, setCounter}) => () => {
           setCounter(counter+1);
