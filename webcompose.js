@@ -117,12 +117,12 @@ class ComposableElement extends HTMLElement {
       }
     }
     this.$props = nextProps;
-    if(this.$prenderer){
+    if(this.$prender){
         this.$prender(this.$props);
     }
     var fragments = this.$render(this.$props);
     render(fragments,this.$shadow)
-    if(this.$prenderer){
+    if(this.$postrender){
         this.$postrender(this.$props);
     }
   }
