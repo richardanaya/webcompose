@@ -77,7 +77,7 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
-# BlogPost
+# Blog Post
 ```javascript
 import { ComposableElement, html} from "webcompose"
 
