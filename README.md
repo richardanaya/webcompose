@@ -26,7 +26,6 @@ customElements.define("hello-world", HelloWorld);
 
 ```javascript
 import { ComposableElement, html, pure, withState, withHandlers } from "webcompose"
-
   static get composition(){
     return [
       withState("counter","setCounter",1),
