@@ -5,7 +5,7 @@ Create web components with functional composition
 
 Hello! You might be wondering why the phrase "functional composition" is so important right now. In a few words: to make your life easier and your code more consistant. OOP is great, but tends to let many people shoot their own foot by writing code in many different ways. Much of modern UI development is focused on unidirectional data flow, and functional composition has been evolving over the last year or so as a standard way to express that flow. It can allow your development to be concerned about a few important principles:
 
-* how does my component receive and acquire it's props it will use to render
+* how does my component receive and acquire it's data it will use to render
 * how do I have a stateless and easily testable functional UI components
 * how do I easily define when this component should not update the DOM
 
@@ -75,7 +75,7 @@ element.setAttribute("name","Welt");
 ```
 *Pro Tip: if you select an element using inspect or element view in Chrome Dev Tools, you can access the selected element using the $0 variable in the console*
 
-You'll notice now that our rendering logic now has two props available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
+You'll notice now that our rendering logic now has two properties available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
 
 # 1 + 1 = 2
@@ -115,7 +115,7 @@ customElements.define("math-add", MathAdd);
 <math-add left="2" right"2"></math-add>
 ```
 
-UI components often need more than just their inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new prop that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the props derived from the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
+UI components often need more than just their inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new property to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the props derived from the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
 
 Additionally, you may have noticed that we are using **Number** as a type of our properties. This will instruct WebCompose to automatically convert attribute values to a number whenever they should happen to exist or change.
 
