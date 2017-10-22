@@ -232,8 +232,6 @@ State is useful. In this component the **withState** composition function allows
 # Redux
 
 ```javascript
-
-// Create a store
 function counter (state=0, action) {
   switch (action.type) {
   	case 'INCREMENT':
@@ -243,7 +241,6 @@ function counter (state=0, action) {
   return state;
 }
 
-// Put it somewhere we can find
 document.querySelector('provider').store = Redux.createStore(counter);
 ```
 
