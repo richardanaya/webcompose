@@ -174,8 +174,10 @@ customElements.define("math-add", MathAdd);
 ```
 
 ```html
-<math-add left="2" right"2"></math-add>
+<math-add left="2" right="2"></math-add>
 ```
+
+[Demo](https://jsfiddle.net/3wf6hbnk/1/)
 
 UI components often need more than just their element inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new prop to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
 
@@ -198,10 +200,10 @@ As you will see in the examples ahead, business logic tends to have very repeate
 # Simple Counter
 
 ```javascript
-import { ComposableElement, html, withState, withHandlers } from "webcompose"
+class Counter extends ComposableElement {
   static get composition(){
     return [
-      withState("counter","setCounter",1)
+      withState("counter","setCounter",1),
       withHandlers({
         increment : ({counter, setCounter}) => () => {
           setCounter(counter+1);
@@ -223,6 +225,7 @@ customElements.define("simple-counter", Counter);
 ```html
 <simple-counter></simple-counter>
 ```
+[Demo](https://jsfiddle.net/58be4jqz/1/)
 
 State is useful. In this component the **withState** composition function allows is to introduce two new props *counter* and *setCounter*. *counter* is initially set to a value of 1. *setCounter* can be used to modify this value and request the component be updated.
 
