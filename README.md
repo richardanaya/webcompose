@@ -280,3 +280,11 @@ customElements.define("simple-counter", Counter);
 [Demo](https://jsfiddle.net/z0f1mcy6/)
 
 Redux is a common centralized datastore. WebCompose comes with an opionionated utility function connect for assisting in mapping state/dispatch into your component's props. It looks for the closest parent tag *<provider>* and gets the store property on it, and updates the component when the store updates.
+
+### `connect([mapStateToProps], [mapDispatchToProps])`
+
+#### Arguments
+
+* [`mapStateToProps(state, [props]): newProps`]
+
+* [`mapDispatchToProps(dispatch, [props]): newProps`]
