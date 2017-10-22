@@ -115,6 +115,24 @@ customElements.define("math-add", MathAdd);
 <math-add left="2" right"2"></math-add>
 ```
 
+UI components often need than just their inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new property that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the props derived from the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
+
+Additionally, you may have noticed that we are using **Number** as a type of our properties. This will instruct WebCompose to automatically convert attribute values to a number whenever they should happen to exist or change.
+
+You might be asking right now why it's useful to perform this level of separation right now. In two words: consistency and testability. It is entirely possible to write the code above using standard OOP logic. Difficulty arrises in large code bases with many components that are written in many different varying ways. Simple compoments may be writtend different than complex. Programmers may implement different ways to acheive the same result. Logic may be combined for brevity, but increase difficulty for testing.
+
+WebCompose seperates business logic from rendering. This allows us to do testing on our final rendering logic in a very minimal way.
+
+```javascript
+test('renders addition correctly', () => {
+    const fragment = MathAdd.render({left:2, right: 2, result:4});
+    const element = render(t, container);
+    assert.equal(container.innerHTML, "2 + 2 = 4");
+  });
+```
+
+As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
+
 # Simple Counter
 
 ```javascript
