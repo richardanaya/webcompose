@@ -41,7 +41,7 @@ import { ComposableElement, html, pure, withState, withHandlers } from "webcompo
 
   static render({counter, increment}){
     return html`
-      ${counter} <button on-click="${increment}">+</button>
+      ${counter} <button on-click=${increment}>+</button>
     `
   }
 }
