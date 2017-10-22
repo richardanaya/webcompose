@@ -77,6 +77,51 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
+# BlogPost
+```javascript
+import { ComposableElement, html} from "webcompose"
+
+class BlogPost extends ComposableElement {
+  static render({left, right, result}){
+    return html`
+      <style>
+        blogpost {
+          border: solid 1px black;
+          padding: 15px;
+          width: 100%;
+        }
+        
+        blogpost--title {
+          font-size: 20px;
+        }
+        
+        blogpost--body {
+          font-size: 12px;
+        }
+      </style>
+      <div class="blogpost">
+        <div class="blogpost--title"><slot name="title"></slot></h1>
+        <div class="blogpost--body"><slot></slot></div>
+      </div>
+    `
+  }
+}
+
+customElements.define("blog-post", BlogPost);
+```
+
+```html
+<blog-post>
+  <span slot="title">How To Cook An Egg</span>
+  <p>
+    1. Crack egg
+    2. Butter pan
+    3. Put egg in pan
+  </p>
+</blog-post>
+```
+
+Custom Elements allows for children elements using a system called slots. If your element has slots within it. Components will be placed in the appropriate location. Slots can be named. Multiple elements are allowed per slot.
 
 # 1 + 1 = 2
 
