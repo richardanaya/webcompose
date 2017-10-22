@@ -126,7 +126,7 @@ customElements.define("blog-post", BlogPost);
 </blog-post>
 ```
 
-Custom Elements allows for children elements using a system called slots. If your element has slots within it. Components will be placed in the appropriate location. Slots can be named. Multiple elements are allowed per slot.
+Custom Elements allows for children elements using a system called slots defined in Shadow Dom V1. If your element has slots within it. Components will be placed in the appropriate location. Slots can be named. Multiple elements are allowed per slot.
 
 # 1 + 1 = 2
 
