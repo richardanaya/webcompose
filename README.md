@@ -1,6 +1,12 @@
 # WebCompose
 Create web components with functional composition
 
+```npm install webcompose```
+
+or
+
+```<script src="https://unpkg.com/webcompose@latest/dist/webcompose.min.js"></script>```
+
 # Introduction
 
 Hello! You might be wondering why the phrase "functional composition" is so important right now. In a few words: to make your life easier and your code more consistant. OOP is great, but tends to let many people shoot their own foot by writing code in many different ways. Much of modern UI development is focused on unidirectional data flow, and functional composition has been evolving over the last year or so as a standard way to express that flow. It can allow your development to be concerned about a few important principles:
