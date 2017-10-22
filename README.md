@@ -31,6 +31,7 @@ customElements.define("hello-world", HelloWorld);
 <hello-world></hello-world>
 ```
 
+Before beginning anything, let's get our feet wet and remind ourselves what web components are. Simply put: they let us create new and powerful HTML tags! This library uses Custom Elements V1, Shadow DOM V1, and Templates to do this. These technologies can be polyfilled, but many modern libraries are supporting them out of the box too.
 
 # Simple Counter
 
