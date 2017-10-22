@@ -44,7 +44,7 @@ class HelloWorldly extends ComposableElement {
   static get properties() {
     return {
       greeting: {type:String, value:"Hello", attr:"greeting"},
-      name:     {type:String, value:"Traveler", attr:"name"}
+      name:     {type:String, value:"World", attr:"name"}
     }
   }
 
@@ -64,7 +64,7 @@ customElements.define("hello-world", HelloWorldly);
 
 HTML elements receive data through two primary way: attributes & properties. Properties are primarily a far more efficient way to receive data, as they do not require string conversion and should be the emphasis of the components you create, however sometimes it is useful to expose attributes on your HTML that just make it easier to use!
 
-Custom Elements V1, requires us to describe which attributes our HTML element will observe the changes of: greeting & name. WebCompose requires us to define a definition of the properties used by your component, and how you would like them exposed. In our example above, we express that we not only want properties greeeting & name, but also to expose them as an attribute with a similar name. Now we can update our component in two ways.
+Custom Elements V1, requires us to describe which attributes our HTML element will observe the changes of: greeting & name. WebCompose requires us to define a definition of the properties used by your component, and how you would like them exposed. In our example above, we express that we not only want properties greeeting & name, but also to expose them as an attribute with a similar name and a default value. Now we can update our component in two ways.
 
 ```javascript
 var element = // document.querySelector(...);
@@ -73,6 +73,7 @@ element.greeting="Guten Tag";
 // or via attribute
 element.setAttribute("name","Welt");
 ```
+*Pro Tip: if you select an element using inspect or element view in Chrome def tools, you can access the selected element using the $0 variable*
 
 You'll notice now that our rendering logic now has two props available to it. WebCompose is about definint a flow of data within your compoment, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
