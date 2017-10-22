@@ -340,3 +340,29 @@ Redux is a common centralized datastore. WebCompose comes with an opionionated u
 * [`mapStateToProps(state, [props]): newProps`]
 
 * [`mapDispatchToProps(dispatch, [props]): newProps`]
+
+# Preventing Rerendering
+
+```javascript
+import { ComposableElement, html, pure} from "webcompose"
+
+class ExpensiveComponent extends ComposableElement {
+  static get composition(){
+    return [
+      ...,
+      pure()
+    ]
+  }
+
+  static render(){
+    return html`Expensive component goes here!`
+  }
+}
+
+customElements.define("expensive-component", ExpensiveComponent);
+```
+
+Sometimes you really want to make sure that your component does not rerender. To fascilitate this, we have a utility composition function named *pure* that will stop rendering if it detects that the props it recieves are exactly the same as the current props of the component. People who use immutable data structures find this useful because they can prevent work from being done that's not necessary. 
+
+* *pure* only does a shallow equality test. It is not capable of noticing changes witin the props themselves.
+* Be sure you pay attention to where in the composition you place *pure*. It should only be in a spot where you are certain the update of your component should stop. Usually at the end of your composition.
