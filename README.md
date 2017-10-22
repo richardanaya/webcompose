@@ -136,6 +136,8 @@ customElements.define("blog-post", BlogPost);
 </blog-post>
 ```
 
+[Demo](https://jsfiddle.net/005bc157/)
+
 Custom Elements allows for children elements using a system called slots defined in Shadow Dom V1. If your element has slots within it. child elements will be placed in the appropriate default or named slot. Multiple elements are allowed per slot.
 
 # 1 + 1 = 2
