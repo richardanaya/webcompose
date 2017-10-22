@@ -83,6 +83,58 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
+# Fruit List
+```javascript
+const { ComposableElement, html, repeat} = window.webcompose
+
+class FruitList extends ComposableElement {
+  static get observedAttributes() {return ['fruit']; }
+
+  static get properties() {
+    return {
+      fruit: {type:Array, value:["apples","oranges","bananas"], attr:"fruit"},
+    }
+  }
+
+  static render({fruit}){
+    const fruitList = fruit.map((f,i) => html`<div>${i+1}. ${f}</div>`);
+    return html`
+      <h1>Fruits</h1>
+      ${fruitList}
+    `
+  }
+}
+
+customElements.define("fruit-list", FruitList);
+```
+```html
+<fruit-list></fruit-list>
+<fruit-list fruit='["avocado","tomato"]'></fruit-list>
+```
+
+[Demo](https://jsfiddle.net/7zgjoob5/)
+
+Attributes with type *Array* or *Object* can be converted from strings within the capabilites of *JSON.parse*
+
+While lists can be mapped to HTML, lists can be rendered far more efficiently using a helper function *repeat*. WebCompose's rendering engine uses a unique key on each object in order to efficiently update the DOM when changes occur to the list (reorderings, additions, deletions).
+
+```javascript
+const fruitList = repeat(
+  fruit,
+  (i) => i,
+  (i, index) => html`<div>${index+1}. ${i}</div>`
+);
+```
+
+[Demo](https://jsfiddle.net/n1rn0m3f/)
+
+### `repeat(arrayOfItems, mapItemToKey, mapItemToHTML)`
+
+#### Arguments
+* [`mapItemToKey(obj): String`]
+
+* [`mapItemToHTML(obj): Template`]
+
 # Blog Post
 ```javascript
 import { ComposableElement, html} from "webcompose"
