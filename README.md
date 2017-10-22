@@ -25,9 +25,7 @@ import { ComposableElement, html } from "webcompose"
 
 class HelloWorld extends ComposableElement {
   static render(){
-    return html`
-      Hello World
-    `
+    return html`Hello World`
   }
 }
 
@@ -57,9 +55,7 @@ class HelloWorldly extends ComposableElement {
   }
 
   static render({greeting,name}){
-    return html`
-      ${greeting} ${name}
-    `
+    return html`${greeting} ${name}`
   }
 }
 
@@ -164,9 +160,7 @@ class MathAdd extends ComposableElement {
   }
 
   static render({left, right, result}){
-    return html`
-      ${left} + ${right} = ${result}
-    `
+    return html`${left} + ${right} = ${result}`
   }
 }
 
@@ -188,12 +182,16 @@ You might be asking right now why it's useful to perform this level of separatio
 WebCompose seperates business logic from rendering. This allows us to do testing on our final rendering logic in a very minimal way. Since our render function is stateless, we can test our rendering logic as if it were a pure function.
 
 ```javascript
-test('renders addition correctly', () => {
-    const fragment = MathAdd.render({left:2, right: 2, result:4});
-    const element = render(t, container);
-    assert.equal(container.innerHTML, "2 + 2 = 4");
+describe('MathAdd Tests', function() {
+  it('2 + 2 = 4', function() {
+    const container = document.createElement('div');
+    render(MathAdd.render({left: 2, right: 2, result: 4}),container)
+    expect(container.innerHTML).to.equal(`2 + 2 = 4`);
   });
+});
 ```
+
+[Demo](https://jsfiddle.net/ftpb6fna/)
 
 As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
 
