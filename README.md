@@ -127,6 +127,7 @@ Lists can be generated/reordered efficiently using a helper function repeat.
 
 * [`mapItemToHTML(obj): Template`]
 
+Although unusual to use, attributes with type *Array* or *Object* can be converted from strings within the capabilites of *JSON.parse*
 
 # Blog Post
 ```javascript
