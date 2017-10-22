@@ -118,6 +118,7 @@ customElements.define("blog-post", BlogPost);
     2. Butter pan
     3. Put egg in pan
   </p>
+  <p>Mix egg thoroughly before putting in pan. Add a little salt. Putting a lid on top can help cook the top faster along with bottom of egg.</p>
 </blog-post>
 ```
 
