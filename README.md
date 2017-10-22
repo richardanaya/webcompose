@@ -45,6 +45,7 @@ import { ComposableElement, html, pure, withState, withHandlers } from "webcompo
     `
   }
 }
+
 customElements.define("simple-counter", Counter);
 ```
 
