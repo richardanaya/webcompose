@@ -85,17 +85,17 @@ class BlogPost extends ComposableElement {
   static render({left, right, result}){
     return html`
       <style>
-        blogpost {
+        .blogpost {
           border: solid 1px black;
           padding: 15px;
           width: 100%;
         }
         
-        blogpost--title {
+        .blogpost--title {
           font-size: 20px;
         }
         
-        blogpost--body {
+        .blogpost--body {
           font-size: 12px;
         }
       </style>
