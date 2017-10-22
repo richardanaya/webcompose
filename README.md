@@ -31,7 +31,50 @@ customElements.define("hello-world", HelloWorld);
 <hello-world></hello-world>
 ```
 
-Before beginning anything, let's get our feet wet and remind ourselves what web components are. Simply put: they let us create new and powerful HTML tags! This library uses Custom Elements V1, Shadow DOM V1, and Templates to do this. These technologies can be polyfilled, but many modern libraries are supporting them out of the box too. Custom Elements use ES6 classes to define element behavior. Our components will extend this library's element ComposableElement that does all the heavy lifting!
+Before beginning anything, let's get our feet wet and remind ourselves what web components are. Simply put: they let us create new and powerful HTML tags! This library uses Custom Elements V1, Shadow DOM V1, and Templates to do this. These technologies can be polyfilled, but many modern libraries are supporting them out of the box too. Custom Elements use ES6 classes to define element behavior. Our components will extend this library's element ComposableElement that does all the heavy lifting.
+
+# Bonjour Monde
+
+```javascript
+import { ComposableElement, html } from "webcompose"
+
+class HelloWorldly extends ComposableElement {
+  static get observedAttributes() {return ['greeting','name']; }
+  
+  static get properties() {
+    return {
+      greeting: {type:String, value:"Hello", attr:"greeting"},
+      name:     {type:String, value:"Traveler", attr:"name"}
+    }
+  }
+
+  static render({greeting,name}){
+    return html`
+      ${greeting} ${name}
+    `
+  }
+}
+
+customElements.define("hello-world", HelloWorldly);
+```
+
+```html
+<hello-worldly greeting="Bonjour" name="Monde"></hello-worldly>
+```
+
+HTML elements receive data through two primary way: attributes & properties. Properties are primarily a far more efficient way to receive data, as they do not require string conversion and should be the emphasis of the components you create, however sometimes it is useful to expose attributes on your HTML that just make it easier to use!
+
+Custom Elements V1, requires us to describe which attributes our HTML element will observe the changes of: greeting & name. WebCompose requires us to define a definition of the properties used by your component, and how you would like them exposed. In our example above, we express that we not only want properties greeeting & name, but also to expose them as an attribute with a similar name. Now we can update our component in two ways.
+
+```javascript
+var element = // document.querySelector(...);
+// directly via observed property
+element.greeting="Guten Tag";
+// or via attribute
+element.setAttribute("name","Welt");
+```
+
+You'll notice now that our rendering logic now has two props available to it. WebCompose is about definint a flow of data within your compoment, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
 # Simple Counter
 
