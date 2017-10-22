@@ -228,3 +228,54 @@ customElements.define("simple-counter", Counter);
 State is useful. In this component the **withState** composition function allows is to introduce two new props *counter* and *setCounter*. *counter* is initially set to a value of 1. *setCounter* can be used to modify this value and request the component be updated.
 
 **withHandlers** allows us to define functions that will be used most typically with event handlers. It allows us to keep our event handling logic out of our render code and enable easier testability of our rendering.
+
+# Redux
+
+```javascript
+
+// Create a store
+function counter (state=0, action) {
+  switch (action.type) {
+  	case 'INCREMENT':
+    	state++;
+      break;
+  }
+  return state;
+}
+
+// Put it somewhere we can find
+document.querySelector('provider').store = Redux.createStore(counter);
+```
+
+```javascript
+import { ComposableElement, html, connect } from 'webcompose'
+
+class Counter extends ComposableElement {
+  static get composition(){
+    return [
+      connect((state)=>({
+      	counter: state
+      }), (dispatch,{counter}) => ({
+      	increment : () => {
+        	dispatch({type:"INCREMENT"});
+        }
+      }))
+    ]
+  }
+
+  static render({counter, increment}){
+    return html`
+      ${counter} <button on-click=${increment}>+</button>
+    `
+  }
+}
+
+customElements.define("simple-counter", Counter);
+```
+```
+<provider>
+  ...
+  <simple-counter></simple-counter>
+  ...
+</provider>
+```
