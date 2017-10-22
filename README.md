@@ -254,7 +254,7 @@ class Counter extends ComposableElement {
        counter: state
       }), (dispatch}) => ({
       	increment : () => {
-        	dispatch({type:"INCREMENT"});
+          dispatch({type:"INCREMENT"});
         }
       }))
     ]
