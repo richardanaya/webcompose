@@ -1,0 +1,39 @@
+<script src="dist/webcompose.min.js"></script>
+<script>
+var { ComposableElement, html, withState, withHandlers, pure } = window.webcompose;
+
+class HelloWorld extends ComposableElement {
+  static get observedAttributes() {return ['greeting','name']; }
+
+  static get properties(){
+    return {
+      greeting: { type: Number, value: 1, attr: "greeting" },
+      name: { type: String, value: "Richard", attr: "name" }
+    }
+  }
+
+  static get composition(){
+    return [
+      withState("counter","setCounter",1),
+      pure(),
+      withHandlers({
+        onSayHi : ({counter, setCounter}) => () => {
+          setCounter(counter+1);
+        }
+      })
+    ]
+  }
+
+  static render({greeting,name, counter, onSayHi}){
+    return html`
+      <div>${greeting} ${name}</div>
+      <div><button on-click="${onSayHi}">Say Hi</button></div>
+      <div>You've said hi ${counter} times.</div>
+    `
+  }
+}
+
+customElements.define("hello-world",HelloWorld)
+</script>
+<hello-world greeting="123"></hello-world>
+<hello-world></hello-world>
