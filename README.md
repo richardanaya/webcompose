@@ -218,3 +218,7 @@ customElements.define("simple-counter", Counter);
 ```html
 <simple-counter></simple-counter>
 ```
+
+State is useful. In this component the **withState** composition function allows is to introduce two new props *counter* and *setCounter*. *counter* is initially set to a value of 1. *setCounter* can be used to modify this value and request the component be updated.
+
+**withHandlers** allows us to define functions that will be used most typically with event handlers. It allows us to keep our event handling logic out of our render code and enable easier testability of our rendering.
