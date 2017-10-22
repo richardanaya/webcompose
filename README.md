@@ -115,7 +115,7 @@ customElements.define("math-add", MathAdd);
 <math-add left="2" right"2"></math-add>
 ```
 
-UI components often need more than just their inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new property to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the props derived from the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
+UI components often need more than just their inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new property to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the element's observed attributes & properties as an object (often called props in the community), output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
 
 Additionally, you may have noticed that we are using **Number** as a type of our properties. This will instruct WebCompose to automatically convert attribute values to a number whenever they should happen to exist or change.
 
