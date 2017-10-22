@@ -25,9 +25,7 @@ import { ComposableElement, html } from "webcompose"
 
 class HelloWorld extends ComposableElement {
   static render(){
-    return html`
-      Hello World
-    `
+    return html`Hello World`
   }
 }
 
@@ -57,9 +55,7 @@ class HelloWorldly extends ComposableElement {
   }
 
   static render({greeting,name}){
-    return html`
-      ${greeting} ${name}
-    `
+    return html`${greeting} ${name}`
   }
 }
 
@@ -164,9 +160,7 @@ class MathAdd extends ComposableElement {
   }
 
   static render({left, right, result}){
-    return html`
-      ${left} + ${right} = ${result}
-    `
+    return html`${left} + ${right} = ${result}`
   }
 }
 
@@ -194,6 +188,8 @@ test('renders addition correctly', () => {
     assert.equal(container.innerHTML, "2 + 2 = 4");
   });
 ```
+
+[Demo](https://jsfiddle.net/ftpb6fna/)
 
 As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
 
