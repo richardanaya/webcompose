@@ -7,14 +7,14 @@ Create web components with functional composition
 import { ComposableElement, html } from "webcompose"
 
 class HelloWorld extends ComposableElement {
-  static render({greeting,name, counter, onSayHi}){
+  static render(){
     return html`
       Hello World
     `
   }
 }
 
-customElements.define("hello-world",HelloWorld);
+customElements.define("hello-world", HelloWorld);
 ```
 
 ```html
@@ -39,13 +39,13 @@ import { ComposableElement, html, pure, withState, withHandlers } from "webcompo
     ]
   }
 
-  static render({counter,increment}){
+  static render({counter, increment}){
     return html`
       ${counter} <button on-click="${increment}">+</button>
     `
   }
 }
-customElements.define("simple-counter",Counter);
+customElements.define("simple-counter", Counter);
 ```
 
 ```html
