@@ -77,6 +77,44 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now has two props available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
+
+# 1 + 1 = 2
+
+```javascript
+import { ComposableElement, html, withProps} from "webcompose"
+
+class MathAdd extends ComposableElement {
+  static get observedAttributes() {return ['left','right']; }
+  
+  static get properties() {
+    return {
+      left:   {type:Number, value: 1, attr:"left"},
+      right:  {type:Number, value: 1, attr:"right"}
+    }
+  }
+  
+  static get composition(){
+    return [
+      withProps(({left,right}) => ({
+        result: left+right
+      }))
+    ]
+  }
+
+  static render({left, right, result}){
+    return html`
+      ${left} + ${right} = ${result}
+    `
+  }
+}
+
+customElements.define("math-add", MathAdd);
+```
+
+```html
+<math-add left="2" right"2"></math-add>
+```
+
 # Simple Counter
 
 ```javascript
