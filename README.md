@@ -183,11 +183,11 @@ WebCompose seperates business logic from rendering. This allows us to do testing
 
 ```javascript
 describe('MathAdd Tests', function() {
-	it('2 + 2 = 4', function() {
-  		const container = document.createElement('div');
-		render(MathAdd.render({left: 2, right: 2, result: 4}),container)
-  		expect(container.innerHTML).to.equal(`2 + 2 = 4`);
-	});
+  it('2 + 2 = 4', function() {
+    const container = document.createElement('div');
+    render(MathAdd.render({left: 2, right: 2, result: 4}),container)
+    expect(container.innerHTML).to.equal(`2 + 2 = 4`);
+  });
 });
 ```
 
