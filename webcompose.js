@@ -80,7 +80,7 @@ class ComposableElement extends HTMLElement {
   }
 
   connectedCallback(){
-    this.update(this.$props,true);
+    this.$updateProps(this.$props,true);
   }
 
   defineProp(name){
@@ -97,10 +97,10 @@ class ComposableElement extends HTMLElement {
   }
 
   updateProp(name,value){
-    this.update(Object.assign({},this.$props,{[name]:value}));
+    this.$updateProps(Object.assign({},this.$props,{[name]:value}));
   }
 
-  update(nextProps,force){
+  $updateProps(nextProps,force){
     if(this.$composition){
       for(var i = 0; i < this.$composition.length; i++){
         var result = this.$composition[i](nextProps,this.$props);;
@@ -156,13 +156,32 @@ function withState(name,functionName,value){
     var currentValue = value;
     function updateValue(v){
       currentValue = v;
-      instance.update(instance.$props);
+      instance.$updateProps(instance.$props);
     }
     return (nextProps)=>{
       return Object.assign({},nextProps, {
         [name] : currentValue,
         [functionName] : updateValue
       });
+    }
+  }
+}
+
+function connect(mapStateToProps,mapDispatchToProps){
+  return (el) => {
+    var provider = el.closest('provider');
+    provider.store.subscribe(()=>{
+    	el.$updateProps(el.$props);
+    })
+    return (nextProps)=>{
+      let newProps = nextProps;
+      if(mapStateToProps){
+      	newProps = Object.assign(newProps,mapStateToProps(provider.store.getState(),newProps));
+      }
+      if(mapDispatchToProps){
+      	newProps = Object.assign(newProps,mapDispatchToProps(provider.store.dispatch,newProps));
+      }
+      return newProps;
     }
   }
 }
@@ -174,5 +193,6 @@ export {
   withHandlers,
   pure,
   withState,
-  render
+  render,
+  connect
 }
