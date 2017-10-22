@@ -83,6 +83,51 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
+# Fruit List
+```javascript
+const { ComposableElement, html, repeat} = window.webcompose
+
+class FruitList extends ComposableElement {
+  static get observedAttributes() {return ['fruit']; }
+
+  static get properties() {
+    return {
+      fruit: {type:Array, value:["apples","oranges","bananas"], attr:"fruit"},
+    }
+  }
+
+  static render({fruit}){
+  	const fruitList = repeat(
+    	fruit,
+      (i) => i,
+      (i, index) => html`<div>${index+1}. ${i}</div>`
+    );
+    return html`
+      <h1>Fruits</h1>
+      ${fruitList}
+    `
+  }
+}
+
+customElements.define("fruit-list", FruitList);
+```
+```html
+<fruit-list></fruit-list>
+<fruit-list fruit='["avocado","tomato"]'></fruit-list>
+```
+[Demo](https://jsfiddle.net/n1rn0m3f/)
+
+Lists can be generated/reordered efficiently using a helper function repeat.
+
+
+### `repeat(arrayOfItems, mapItemToKey, mapItemToHTML)`
+
+#### Arguments
+* [`mapItemToKey(obj): String`]
+
+* [`mapItemToHTML(obj): Template`]
+
+
 # Blog Post
 ```javascript
 import { ComposableElement, html} from "webcompose"
