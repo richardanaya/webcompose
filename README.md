@@ -97,11 +97,7 @@ class FruitList extends ComposableElement {
   }
 
   static render({fruit}){
-    const fruitList = repeat(
-      fruit,
-      (i) => i,
-      (i, index) => html`<div>${index+1}. ${i}</div>`
-    );
+    const fruitList = fruit.map((f,i) => html`<div>${i+1}. ${f}</div>`);
     return html`
       <h1>Fruits</h1>
       ${fruitList}
@@ -115,10 +111,22 @@ customElements.define("fruit-list", FruitList);
 <fruit-list></fruit-list>
 <fruit-list fruit='["avocado","tomato"]'></fruit-list>
 ```
+
+[Demo](https://jsfiddle.net/7zgjoob5/)
+
+Attributes with type *Array* or *Object* can be converted from strings within the capabilites of *JSON.parse*
+
+While lists can be mapped to HTML, lists can be rendered far more efficiently using a helper function *repeat*. WebCompose's rendering engine uses a unique key on each object in order to efficiently update the DOM when changes occur to the list (reorderings, additions, deletions).
+
+```javascript
+const fruitList = repeat(
+  fruit,
+  (i) => i,
+  (i, index) => html`<div>${index+1}. ${i}</div>`
+);
+```
+
 [Demo](https://jsfiddle.net/n1rn0m3f/)
-
-Lists can be generated/reordered efficiently using a helper function repeat. WebCompose's rendering engine uses a unique key on each object in order to efficiently update the DOM when changes occur to the list (reorderings, additions, deletions).
-
 
 ### `repeat(arrayOfItems, mapItemToKey, mapItemToHTML)`
 
@@ -126,8 +134,6 @@ Lists can be generated/reordered efficiently using a helper function repeat. Web
 * [`mapItemToKey(obj): String`]
 
 * [`mapItemToHTML(obj): Template`]
-
-Although unusual to use, attributes with type *Array* or *Object* can be converted from strings within the capabilites of *JSON.parse*
 
 # Blog Post
 ```javascript
