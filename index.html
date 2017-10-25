@@ -15,7 +15,6 @@ class HelloWorld extends ComposableElement {
   static get composition(){
     return [
       withState("counter","setCounter",1),
-      pure(),
       withHandlers({
         onSayHi : ({counter, setCounter}) => () => {
           setCounter(counter+1);

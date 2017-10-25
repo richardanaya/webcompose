@@ -134,12 +134,23 @@ function withProps(props){
   }
 }
 
+function createHandler(instance,fnCreator){
+  return () => {
+    var fn = fnCreator(instance.$props);
+    fn.apply(instance,arguments)
+  }
+}
+
 function withHandlers(handlers){
-  return () => (nextProps) => {
+  return (instance) => {
+    var handlerProxies = {};
     var keys = Object.keys(handlers);
-    var newHandlers = {};
-    keys.forEach(k => newHandlers[k] = handlers[k](nextProps));
-    return Object.assign({},nextProps,newHandlers);
+    keys.forEach(k => {
+      handlerProxies[k] = createHandler(instance,handlers[k])
+    });
+    return (nextProps) => {
+      return Object.assign(nextProps,handlerProxies);
+    }
   }
 }
 
