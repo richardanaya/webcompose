@@ -79,10 +79,12 @@ class ComposableElement extends HTMLElement {
   }
 
   connectedCallback(){
-    this.$updateProps(this.$props,true);
+    // make sure connected always called first 
+    this.$processComposition(this.$props,true);
     if(this.$lifecycle && this.$lifecycle.connected){
       this.$lifecycle.connected.call(this,this.$props);
     }
+    this.$renderProps();
   }
 
   disconnectedCallback(){
@@ -108,6 +110,11 @@ class ComposableElement extends HTMLElement {
   }
 
   $updateProps(nextProps,force){
+    this.$processComposition(nextProps,force);
+    this.$renderProps();
+  }
+
+  $processComposition(nextProps,force){
     if(this.$composition){
       for(var i = 0; i < this.$composition.length; i++){
         var result = this.$composition[i](nextProps,this.$props);;
@@ -123,6 +130,9 @@ class ComposableElement extends HTMLElement {
       }
     }
     this.$props = nextProps;
+  }
+
+  $renderProps(){
     if(this.$lifecycle && this.$lifecycle.prerender){
       this.$lifecycle.prerender.call(this,this.$props);
     }
