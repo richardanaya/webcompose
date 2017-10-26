@@ -87,6 +87,99 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
+# Testing
+
+```javascript
+import { ComposableElement, html, withProps} from "webcompose"
+
+class MathAdd extends ComposableElement {
+  static get observedAttributes() {return ['left','right']; }
+
+  static get properties() {
+    return {
+      left:   {type:Number, value: 1, attr:"left"},
+      right:  {type:Number, value: 1, attr:"right"}
+    }
+  }
+
+  static get composition(){
+    return [
+      withProps(({left,right}) => ({
+        result: left+right
+      }))
+    ]
+  }
+
+  static render({left, right, result}){
+    return html`${left} + ${right} = ${result}`
+  }
+}
+
+customElements.define("math-add", MathAdd);
+```
+
+```html
+<math-add left="2" right="2"></math-add>
+```
+
+[Demo](https://jsfiddle.net/3wf6hbnk/1/)
+
+UI components often need more than just their element inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new prop to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
+
+Additionally, you may have noticed that we are using **Number** as a type of our properties. This will instruct WebCompose to automatically convert attribute values to a number whenever they should happen to exist or change.
+
+You might be asking right now why it's useful to perform this level of separation right now. In two words: consistency and testability. It is entirely possible to write the code above using standard OOP logic. Difficulty arrises in large code bases with many components that are written in many different varying ways. Simple compoments may be written differently than complex ones. Programmers may implement different ways to acheive the same result. Logic may be combined for brevity, but increase difficulty for testing.
+
+WebCompose seperates business logic from rendering. This allows us to do testing on our final rendering logic in a very minimal way. Since our render function is stateless, we can test our rendering logic as if it were a pure function.
+
+```javascript
+describe('MathAdd Tests', function() {
+  it('2 + 2 = 4', function() {
+    const container = document.createElement('div');
+    render(MathAdd.render({left: 2, right: 2, result: 4}),container)
+    expect(container.innerHTML).to.equal(`2 + 2 = 4`);
+  });
+});
+```
+
+[Demo](https://jsfiddle.net/ftpb6fna/)
+
+As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
+
+# State
+
+```javascript
+class Counter extends ComposableElement {
+  static get composition(){
+    return [
+      withState("counter","setCounter",1),
+      withHandlers({
+        increment : ({counter, setCounter}) => () => {
+          setCounter(counter+1);
+        }
+      })
+    ]
+  }
+
+  static render({counter, increment}){
+    return html`
+      ${counter} <button on-click=${increment}>+</button>
+    `
+  }
+}
+
+customElements.define("simple-counter", Counter);
+```
+
+```html
+<simple-counter></simple-counter>
+```
+[Demo](https://jsfiddle.net/58be4jqz/1/)
+
+State is useful. In this component the **withState** composition function allows is to introduce two new props *counter* and *setCounter*. *counter* is initially set to a value of 1. *setCounter* can be used to modify this value and request the component be updated.
+
+**withHandlers** allows us to define functions that will be used most typically with event handlers. It allows us to keep our event handling logic out of our render code and enable easier testability of our rendering.
+
 # Lists
 ```javascript
 const { ComposableElement, html, repeat} = window.webcompose
@@ -191,99 +284,6 @@ customElements.define("blog-post", BlogPost);
 [Demo](https://jsfiddle.net/005bc157/)
 
 Custom Elements allows for children elements using a system called slots defined in Shadow Dom V1. If your element has slots within it. child elements will be placed in the appropriate default or named slot. Multiple elements are allowed per slot.
-
-# Testing
-
-```javascript
-import { ComposableElement, html, withProps} from "webcompose"
-
-class MathAdd extends ComposableElement {
-  static get observedAttributes() {return ['left','right']; }
-
-  static get properties() {
-    return {
-      left:   {type:Number, value: 1, attr:"left"},
-      right:  {type:Number, value: 1, attr:"right"}
-    }
-  }
-
-  static get composition(){
-    return [
-      withProps(({left,right}) => ({
-        result: left+right
-      }))
-    ]
-  }
-
-  static render({left, right, result}){
-    return html`${left} + ${right} = ${result}`
-  }
-}
-
-customElements.define("math-add", MathAdd);
-```
-
-```html
-<math-add left="2" right="2"></math-add>
-```
-
-[Demo](https://jsfiddle.net/3wf6hbnk/1/)
-
-UI components often need more than just their element inputs. This component above offers a simple demonstration of how we can use functional composition to introduce a new prop to the data flow that will be used in the final rendering logic. You'll notice our first functional composition utility function **withProps**. Your component's composition will contain a list of functions that will take in the element's observed attributes & properties, output new props that will be given to the next composition function, until finally given to the rendering logic to update UI.
-
-Additionally, you may have noticed that we are using **Number** as a type of our properties. This will instruct WebCompose to automatically convert attribute values to a number whenever they should happen to exist or change.
-
-You might be asking right now why it's useful to perform this level of separation right now. In two words: consistency and testability. It is entirely possible to write the code above using standard OOP logic. Difficulty arrises in large code bases with many components that are written in many different varying ways. Simple compoments may be written differently than complex ones. Programmers may implement different ways to acheive the same result. Logic may be combined for brevity, but increase difficulty for testing.
-
-WebCompose seperates business logic from rendering. This allows us to do testing on our final rendering logic in a very minimal way. Since our render function is stateless, we can test our rendering logic as if it were a pure function.
-
-```javascript
-describe('MathAdd Tests', function() {
-  it('2 + 2 = 4', function() {
-    const container = document.createElement('div');
-    render(MathAdd.render({left: 2, right: 2, result: 4}),container)
-    expect(container.innerHTML).to.equal(`2 + 2 = 4`);
-  });
-});
-```
-
-[Demo](https://jsfiddle.net/ftpb6fna/)
-
-As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
-
-# State
-
-```javascript
-class Counter extends ComposableElement {
-  static get composition(){
-    return [
-      withState("counter","setCounter",1),
-      withHandlers({
-        increment : ({counter, setCounter}) => () => {
-          setCounter(counter+1);
-        }
-      })
-    ]
-  }
-
-  static render({counter, increment}){
-    return html`
-      ${counter} <button on-click=${increment}>+</button>
-    `
-  }
-}
-
-customElements.define("simple-counter", Counter);
-```
-
-```html
-<simple-counter></simple-counter>
-```
-[Demo](https://jsfiddle.net/58be4jqz/1/)
-
-State is useful. In this component the **withState** composition function allows is to introduce two new props *counter* and *setCounter*. *counter* is initially set to a value of 1. *setCounter* can be used to modify this value and request the component be updated.
-
-**withHandlers** allows us to define functions that will be used most typically with event handlers. It allows us to keep our event handling logic out of our render code and enable easier testability of our rendering.
 
 # Redux
 
