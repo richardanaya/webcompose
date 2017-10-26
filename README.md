@@ -22,7 +22,7 @@ Hello! You might be wondering why the phrase "functional composition" is so impo
 
 This library attempts to serve all these, in addition to exposing a very efficient way of updating the DOM. We'll explore these ideas below in a series of small component examples.
 
-# Hello World
+# Basic Web Component
 
 ```javascript
 import { ComposableElement, html } from "webcompose"
@@ -43,7 +43,7 @@ customElements.define("hello-world", HelloWorld);
 
 Before beginning anything, let's get our feet wet and remind ourselves what web components are. Simply put: they let us create new and powerful HTML tags! This library uses Custom Elements V1, Shadow DOM V1, and Templates to do this. These technologies can be polyfilled, but many modern browsers are supporting them out of the box too. Custom Elements use ES6 classes to define element behavior. Our components will extend this library's element ComposableElement that does all the heavy lifting.
 
-# Bonjour Monde
+# Attributes
 
 ```javascript
 import { ComposableElement, html } from "webcompose"
@@ -87,7 +87,7 @@ element.setAttribute("name","Welt");
 
 You'll notice now that our rendering logic now receives a data object has two properties ( often called it's **props** ) available to it. WebCompose is about defining a flow of data within your component, starting from element attributes & properties, and possibly ending with an update to the web component's HTML. WebCompose is efficient about only re-rendering dynamic elements of your HTML while leaving the static HTML alone.
 
-# Fruit List
+# Lists
 ```javascript
 const { ComposableElement, html, repeat} = window.webcompose
 
@@ -139,7 +139,7 @@ const fruitList = repeat(
 
 * [`mapItemToHTML(obj): Template`]
 
-# Blog Post
+# Children
 ```javascript
 import { ComposableElement, html} from "webcompose"
 
@@ -192,7 +192,7 @@ customElements.define("blog-post", BlogPost);
 
 Custom Elements allows for children elements using a system called slots defined in Shadow Dom V1. If your element has slots within it. child elements will be placed in the appropriate default or named slot. Multiple elements are allowed per slot.
 
-# 1 + 1 = 2
+# Testing
 
 ```javascript
 import { ComposableElement, html, withProps} from "webcompose"
@@ -251,7 +251,7 @@ describe('MathAdd Tests', function() {
 
 As you will see in the examples ahead, business logic tends to have very repeated structure, and the power of WebCompose's utility functions will make it easier to see what's happening in your flow of props.
 
-# Simple Counter
+# State
 
 ```javascript
 class Counter extends ComposableElement {
@@ -399,12 +399,7 @@ customElements.define("verbose-component", VerboseComponent);
 ```
 Sometimes you really need access to the lifecycle. The utility function *lifecycle* lets you define handlers for some events.
 
-### `lifecycle({
-  connected: [connectedHandler],
-  prerender: [prerenderHandler],
-  postrender: [postrenderHandler],
-  disconnected: [disconnectedHandler]
-})`
+### `lifecycle({ connected: [connectedHandler], prerender: [prerenderHandler], postrender: [postrenderHandler], disconnected: [disconnectedHandler] })`
 
 #### Arguments
 
