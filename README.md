@@ -1,10 +1,10 @@
 # WebCompose
 Create web components with functional composition
 
-```bash 
+```bash
 npm install webcompose
 ```
-```html 
+```html
 <script src="https://unpkg.com/webcompose@latest/dist/webcompose.min.js"></script>
 ```
 
@@ -12,7 +12,7 @@ npm install webcompose
 
 Hello! You might be wondering why the phrase "functional composition" is so important right now. In a few words: to make your life easier and your code more consistant. OOP is great, but tends to let many people shoot their own foot by writing code in many different ways. Much of modern UI development is focused on unidirectional data flow, and functional composition has been evolving over the last year or so as a standard way to express that flow. It can allow your development to be concerned about a few important principles:
 
-* how will my component consistently receive and acquire it's data it will use to render 
+* how will my component consistently receive and acquire it's data it will use to render
 * how do I have a stateless and easily testable functional UI components
 * how do I easily define when a component should not update it's DOM
 
@@ -46,7 +46,7 @@ import { ComposableElement, html } from "webcompose"
 
 class HelloWorldly extends ComposableElement {
   static get observedAttributes() {return ['greeting','name']; }
-  
+
   static get properties() {
     return {
       greeting: {type:String, value:"Hello", attr:"greeting"},
@@ -148,11 +148,11 @@ class BlogPost extends ComposableElement {
           padding: 15px;
           width: 100%;
         }
-        
+
         .blogpost--title {
           font-size: 20px;
         }
-        
+
         .blogpost--body {
           font-size: 12px;
         }
@@ -177,8 +177,8 @@ customElements.define("blog-post", BlogPost);
     3. Put egg in pan
   </p>
   <p>
-    Mix egg thoroughly before putting in pan. Add 
-    a little salt. Putting a lid on top can help 
+    Mix egg thoroughly before putting in pan. Add
+    a little salt. Putting a lid on top can help
     cook the top faster along with bottom of egg.
   </p>
 </blog-post>
@@ -195,14 +195,14 @@ import { ComposableElement, html, withProps} from "webcompose"
 
 class MathAdd extends ComposableElement {
   static get observedAttributes() {return ['left','right']; }
-  
+
   static get properties() {
     return {
       left:   {type:Number, value: 1, attr:"left"},
       right:  {type:Number, value: 1, attr:"right"}
     }
   }
-  
+
   static get composition(){
     return [
       withProps(({left,right}) => ({
@@ -362,7 +362,7 @@ class ExpensiveComponent extends ComposableElement {
 customElements.define("expensive-component", ExpensiveComponent);
 ```
 
-Sometimes you really want to make sure that your component does not rerender. To fascilitate this, we have a utility composition function named *pure* that will stop rendering if it detects that the props it recieves are exactly the same as the current props of the component. People who use immutable data structures find this useful because they can prevent work from being done that's not necessary. 
+By default WebCompose will update your DOM everytime your props are given a value, but sometimes you really want to make sure that your component does not rerender unnecessarily . To facilitate this, we have a utility composition function named *pure* that will stop rendering if it detects that the props it receives are exactly the same as the current props of the component (i.e. nothing has changed and we shouldn't do costly DOM updates). People who use immutable data structures find this useful because they can prevent work from being done that's not necessary.
 
-* *pure* only does a shallow equality test. It is not capable of noticing differences within the props themselves.
-* Be sure you pay attention to where in the composition you place *pure*. It should only be in a spot where you are certain the update of your component should stop. Usually at the end of your composition.
+* *pure* only does a shallow equality test. It is not capable of noticing differences within the props's children themselves.
+* Be sure you pay attention to where in the composition you place *pure*. It should only be in a spot where you are certain the update of your component should stop. 99% of the time it should be at the end of your composition.

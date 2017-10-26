@@ -88,9 +88,7 @@ class ComposableElement extends HTMLElement {
     Object.defineProperty(this, name, {
       get: function() { return this.$props[name] },
       set: function(newValue) {
-        if(this.$props[name] !== newValue){
-          this.updateProp(name,newValue);
-        }
+        this.updateProp(name,newValue);
       },
       enumerable: true,
       configurable: true
@@ -130,7 +128,7 @@ class ComposableElement extends HTMLElement {
 
 function withProps(props){
   return () => (nextProps)=>{
-    return Object.assign({},nextProps,props(nextProps));
+    return Object.assign(nextProps,props(nextProps));
   }
 }
 
