@@ -10,7 +10,7 @@ npm install webcompose
 
 # TLDR
 
-Like web components? Think React's [recompose](https://github.com/acdlite/recompose) is cool? Like the idea of [lit-html](https://github.com/PolymerLabs/lit-html) and writing your virtual dom in template strings without pre-compilers? Want to use redux easily and take advantage of immutability? This project let's you do it all in a minimal OOP manner. Enjoy!
+Like [web components](https://www.webcomponents.org/)? Think React's [recompose](https://github.com/acdlite/recompose) is cool? Like the idea of [lit-html](https://github.com/PolymerLabs/lit-html) and writing your virtual dom in template strings without pre-compilers? Want to use [redux](http://redux.js.org/) easily and take advantage of immutability? This project let's you do it all in a minimal OOP manner. Enjoy!
 
 # Introduction
 
