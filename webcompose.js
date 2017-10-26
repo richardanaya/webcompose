@@ -116,7 +116,7 @@ class ComposableElement extends HTMLElement {
   $processComposition(nextProps,force){
     if(this.$composition){
       for(var i = 0; i < this.$composition.length; i++){
-        var result = this.$composition[i](nextProps,this.$props);;
+        var result = this.$composition[i].call(this,nextProps,this.$props);
         if(result === false){
           if(force){
             continue;

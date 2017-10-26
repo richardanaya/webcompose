@@ -1,6 +1,6 @@
 {
   "name": "webcompose",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "A tool for functionally composing web components",
   "main": "webcompose.js",
   "scripts": {
