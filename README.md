@@ -370,3 +370,47 @@ By default WebCompose will update your DOM everytime your props are given a valu
 
 * *pure* only does a shallow equality test. It is not capable of noticing differences within the props's children themselves.
 * Be sure you pay attention to where in the composition you place *pure*. It should only be in a spot where you are certain the update of your component should stop. 99% of the time it should be at the end of your composition.
+
+# Lifecycle
+
+```javascript
+const { ComposableElement, html, lifecycle, withState } = window.webcompose
+
+class VerboseComponent extends ComposableElement {
+  static get composition(){
+    return [
+      lifecycle({
+      	connected: () => console.log("component connected"),
+        prerender: () => console.log("component prerender"),
+        postrender: () => console.log("component postrender"),
+        disconnected: () => console.log("component disconnected")
+      })
+    ]
+  }
+
+  static render({log}){
+    return html`
+      Look at the console!
+    `
+  }
+}
+
+customElements.define("verbose-component", VerboseComponent);
+```
+Sometimes you really need access to the lifecycle. The utility function *lifecycle* lets you define handlers for some events.
+
+### `lifecycle({
+  connected: [connectedHandler],
+  prerender: [prerenderHandler],
+  postrender: [postrenderHandler],
+  disconnected: [disconnectedHandler]
+})`
+
+#### Arguments
+
+* [`connectedHandler([props]): void`]
+* [`prerenderHandler([props]): void`]
+* [`postrenderHandler([props]): void`]
+* [`disconnectedHandler([props]): void`]
+
+[Demo](https://jsfiddle.net/k0okrLj7/)
