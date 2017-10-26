@@ -79,7 +79,7 @@ class ComposableElement extends HTMLElement {
   }
 
   connectedCallback(){
-    // make sure connected always called first 
+    // make sure connected always called first
     this.$processComposition(this.$props,true);
     if(this.$lifecycle && this.$lifecycle.connected){
       this.$lifecycle.connected.call(this,this.$props);
@@ -88,7 +88,6 @@ class ComposableElement extends HTMLElement {
   }
 
   disconnectedCallback(){
-    this.$updateProps(this.$props,true);
     if(this.$lifecycle && this.$lifecycle.disconnected){
       this.$lifecycle.disconnected.call(this,this.$props);
     }
