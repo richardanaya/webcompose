@@ -58,9 +58,7 @@ class ComposableElement extends HTMLElement {
     if(!this.__proto__.constructor.observedAttributes){
       this.__proto__.constructor.observedAttributes = Object.keys(this.$attrDefs);
     }
-    this.$prerender = this.__proto__.constructor.prerender;
     this.$render = this.__proto__.constructor.render;
-    this.$postrender = this.__proto__.constructor.postrender;
   }
 
   attributeChangedCallback(attributeName, oldValue, newValue, namespace){
@@ -82,6 +80,16 @@ class ComposableElement extends HTMLElement {
 
   connectedCallback(){
     this.$updateProps(this.$props,true);
+    if(this.$lifecycle && this.$lifecycle.connected){
+      this.$lifecycle.connected.call(this,this.$props);
+    }
+  }
+
+  disconnectedCallback(){
+    this.$updateProps(this.$props,true);
+    if(this.$lifecycle && this.$lifecycle.disconnected){
+      this.$lifecycle.disconnected.call(this,this.$props);
+    }
   }
 
   defineProp(name){
@@ -115,13 +123,13 @@ class ComposableElement extends HTMLElement {
       }
     }
     this.$props = nextProps;
-    if(this.$prerender){
-        this.$prerender(this.$props);
+    if(this.$lifecycle && this.$lifecycle.prerender){
+      this.$lifecycle.prerender.call(this,this.$props);
     }
     var fragments = this.$render(this.$props);
     render(fragments,this.$shadow)
-    if(this.$postrender){
-        this.$postrender(this.$props);
+    if(this.$lifecycle && this.$lifecycle.postrender){
+      this.$lifecycle.postrender.call(this,this.$props);
     }
   }
 }
@@ -180,8 +188,11 @@ function withState(name,functionName,value){
 function connect(mapStateToProps,mapDispatchToProps){
   return (el) => {
     var provider = el.closest('provider');
+    if(!provider){
+      throw new Error("Could not find a provider element with redux store");
+    }
     provider.store.subscribe(()=>{
-    	el.$updateProps(el.$props);
+      el.$updateProps(el.$props);
     })
     return (nextProps)=>{
       let newProps = nextProps;
@@ -192,6 +203,15 @@ function connect(mapStateToProps,mapDispatchToProps){
       	newProps = Object.assign(newProps,mapDispatchToProps(provider.store.dispatch,newProps));
       }
       return newProps;
+    }
+  }
+}
+
+function lifecycle(handlers){
+  return (instance) => {
+    instance.$lifecycle = handlers;
+    return (nextProps)=>{
+      return nextProps;
     }
   }
 }
