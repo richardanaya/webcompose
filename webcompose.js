@@ -225,5 +225,6 @@ export {
   withState,
   render,
   connect,
-  repeat
+  repeat,
+  lifecycle
 }
